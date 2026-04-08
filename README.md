@@ -1,116 +1,57 @@
-:
+# AI Study Buddy
 
-📚 AI Study Buddy — Smart Learning Assistant
+Upload any study material (PDF or TXT) and get:
+- Instant Q&A powered by RAG
+- Auto-generated quizzes (easy/medium/hard)
+- Flashcards for active recall
+- Smart concept summaries
 
-AI Study Buddy is an intelligent AI-powered learning companion designed to help students study more effectively. It provides real-time answers, simplifies complex concepts, generates summaries, and creates quizzes to enhance understanding and retention.
+## Setup
 
-Built using modern NLP and Retrieval-Augmented Generation (RAG), the system delivers accurate, context-aware responses in an interactive and user-friendly interface.
+```bash
+# 1. Go into the folder
+cd studybuddy
 
-
-🚀 Features
-💬 Interactive Q&A — Ask questions from any subject
-🧠 Concept Simplification — Complex topics explained simply
-📝 Auto Notes Generation — Get clean and structured notes
-📂 Document-Based Learning — Upload PDFs/text for analysis
-❓ Quiz Generation — Test your knowledge instantly
-⚡ Fast Responses — Real-time AI-powered answers
-🎯 Personalized Learning — Tailored explanations
-
-
-🛠️ Tech Stack
-Language: Python
-Frontend: Streamlit
-AI/NLP: LLM APIs (OpenAI / Groq / Gemini)
-Architecture: Retrieval-Augmented Generation (RAG)
-Vector Database: FAISS / ChromaDB
-Other Tools: dotenv, pathlib
-
-
-📂 Project Structure
-AI-Study-Buddy/
-│
-├── app.py
-├── rag_engine.py
-├── utils/
-├── data/
-├── requirements.txt
-└── README.md
-
-
-
-⚙️ Installation & Setup
-1️⃣ Clone the repository
-git clone https://github.com/your-username/ai-study-buddy.git
-cd ai-study-buddy
-
-
-
-2️⃣ Create virtual environment
+# 2. Create virtual environment
 python -m venv venv
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate      # Windows
 
+# 3. Activate it
+source venv/bin/activate        # Mac/Linux
+venv\Scripts\activate           # Windows
 
-3️⃣ Install dependencies
+# 4. Install libraries
 pip install -r requirements.txt
 
+# 5. Add your Groq API key — create a .env file:
+GROQ_API_KEY=gsk_xxxxxx
 
-
-4️⃣ Add environment variables
-
-Create a .env file:
-
-API_KEY=your_api_key_here
-5️⃣ Run the app
+# 6. Run the app
 streamlit run app.py
+```
 
+## Project Structure
 
+```
+studybuddy/
+├── app.py           ← Main Streamlit UI (4 modes)
+├── rag_engine.py    ← PDF reading + TF-IDF search
+├── llm_engine.py    ← All Groq API calls
+├── requirements.txt
+└── .env             ← Your API key (don't share this)
+```
 
-🧠 How It Works
-User inputs a question or uploads study material
-Text is converted into embeddings
-Relevant data is retrieved using vector search
-LLM generates a structured response
-Output is displayed in the UI
-📸 Use Cases
-📖 Exam preparation
-🧾 Quick revision notes
-🧠 Concept clarity
-🎓 Self-learning assistant
-📊 Academic support tool
-⭐ Reviews & Feedback
+## How it works
 
-💬 “AI Study Buddy makes learning so much easier by breaking down complex topics into simple explanations.”
+1. You upload a PDF or TXT file
+2. rag_engine.py splits it into chunks and indexes with TF-IDF
+3. When you ask a question, RAG finds the most relevant chunks
+4. Those chunks + your question go to Groq (Llama 3.3)
+5. The LLM answers, generates quizzes, or makes flashcards
 
-💬 “The quiz feature really helps in quick self-assessment before exams.”
+## What you learn building this
 
-💬 “Clean UI and fast responses — perfect for daily study use.”
-
-📢 Share Your Feedback
-
-If you like this project, consider:
-
-⭐ Starring the repository
-🐛 Reporting issues
-💡 Suggesting new features
-🔮 Future Enhancements
-Voice-based interaction 🎙️
-Multi-language support 🌍
-Personalized study plans 📅
-Performance tracking dashboard 📊
-LMS integration
-🤝 Contributing
-
-Contributions are welcome!
-Fork the repo and submit a pull request.
-
-📜 License
-
-MIT License
-
-👨‍💻 Author
-
-Manish Raj
-📧 manishraj20526@gmail.com
-
-🔗 linkedin.com/in/manishraj20526
+- RAG pipeline from scratch (no LangChain needed)
+- TF-IDF text search
+- Streamlit multi-page apps with session state
+- Groq API / LLM integration
+- PDF text extraction with PyPDF2
